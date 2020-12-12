@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Navbar } from '../components/'
 import avatar from '../assets/man.png'
+import { getPatientRecords } from '../store/index'
+import { useHistory } from 'react-router-dom'
 
-function ResultPatient(params) {
+
+function ResultPatient() {
+  
+  const dispatch = useDispatch()
+
+  const history = useHistory()
+  const params = history.location.state
+
+  useEffect(() => {
+    dispatch(getPatientRecords(params))
+  }, [])
+
+  const records = useSelector((state) => state.patientRecords)
+  const patientProfile = useSelector((state) => state.patientProfile)
+
   return (
     <div>
       <Navbar />
@@ -15,9 +32,9 @@ function ResultPatient(params) {
                 <img src={avatar} alt="" className="mx-auto" />
               </div>
               <div className="col-10">
-                <h3>M. Dicky Andeyan Naratama</h3>
-                <p>Cianjur, 24 Desember 1995</p>
-                <p>Komplek GBA-2 Blok J5 no 32, Kab. Bandung</p>
+                <h3>{patientProfile.name}</h3>
+                <p>{Date(patientProfile.birth_date)}</p>
+                <p>{patientProfile.address}</p>
               </div>
             </div>
             <div className="diag-btn">
@@ -32,19 +49,21 @@ function ResultPatient(params) {
             <table className="table table-bordered">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
+                  <th scope="col">No</th>
+                  <th scope="col">Test Type</th>
+                  <th scope="col">File</th>
+                  <th scope="col">Released date</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
+                {records.map(el => (
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>{el.type_test}</td>
+                    <td>{el.file}</td>
+                    <td>{el.date}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
