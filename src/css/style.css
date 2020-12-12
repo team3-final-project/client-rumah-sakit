@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700&display=swap");
+body {
+  font-family: "Work Sans", sans-serif;
+  height: 100%;
+}
+
+.login-page {
+  align-content: center;
+  margin-top: 25vh;
+  font-family: "Work Sans", sans-serif;
+}
+.login-page .logo-container {
+  display: flex;
+  justify-content: center;
+}
+.login-page .card {
+  width: 300px;
+  border-radius: 10px;
+  -webkit-box-shadow: 10px 17px 25px -5px #7a7a7a;
+  -moz-box-shadow: 10px 17px 25px -5px #7a7a7a;
+  box-shadow: 10px 17px 25px -5px #7a7a7a;
+}
+
+.navbar {
+  background-color: #fafafa !important;
+  border-bottom: 1px solid #000000;
+}
+.navbar .nav-item {
+  margin: 0 15px;
+}
+
+.dashboard {
+  font-family: "Work Sans", sans-serif;
+  min-height: 80vh;
+}
+.dashboard .card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #7a7a7a;
+}
+.dashboard .card:hover {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  -webkit-box-shadow: 10px 17px 25px -5px #7a7a7a;
+  -moz-box-shadow: 10px 17px 25px -5px #7a7a7a;
+  box-shadow: 10px 17px 25px -5px #7a7a7a;
+}
+
+.form-add {
+  margin-top: 10vh;
+}
+.form-add .card {
+  width: 500px;
+  border-radius: 10px;
+  -webkit-box-shadow: 10px 17px 25px -5px #7a7a7a;
+  -moz-box-shadow: 10px 17px 25px -5px #7a7a7a;
+  box-shadow: 10px 17px 25px -5px #7a7a7a;
+}
+
+.result-patient {
+  padding: 20px;
+}
+.result-patient .profile {
+  margin-top: 20px;
+  border: 1px solid #a9a9a9;
+  padding: 30px;
+  border-radius: 10px;
+}
+.result-patient .profile .diag-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
+}
+.result-patient .profile h1 {
+  margin-bottom: 30px;
+}
+.result-patient .profile p {
+  color: #7a7a7a;
+}
+
+.profile-hospital {
+  display: flex;
+  justify-content: center;
+}
+.profile-hospital .img-frame {
+  margin-top: 50px;
+  position: absolute;
+  left: 45%;
+  z-index: 1;
+}
+.profile-hospital .img-frame img {
+  width: 150px;
+}
+.profile-hospital .card {
+  text-align: center;
+  padding-top: 60px;
+  margin-top: 140px;
+  margin-bottom: 20px;
+  border: 1px solid #7a7a7a;
+  border-radius: 20px;
+}
+
+footer {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/*# sourceMappingURL=style.css.map */
