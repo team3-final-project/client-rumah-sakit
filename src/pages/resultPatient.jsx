@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Navbar } from '../components/'
 import avatar from '../assets/man.png'
 import { getPatientRecords } from '../store/index'
 import { useHistory } from 'react-router-dom'
+import firebase from '../firebase';
 
 
 function ResultPatient() {
@@ -19,6 +20,24 @@ function ResultPatient() {
 
   const records = useSelector((state) => state.patientRecords)
   const patientProfile = useSelector((state) => state.patientProfile)
+  const [ fileUrl, setFileUrl ] = useState('');
+  const [ files, setFiles ] = useState(null);
+
+  const handleImportFile = (event) => {
+    setFiles(event.target.files[0]);
+    if(files) {
+      console.log(files);
+    }
+  }
+
+  const handlePostImport = async () => {
+    let file = files;
+    let bucketName = 'files'
+    let storageRef = firebase.storage().ref(`${bucketName}/${file.name}`);
+    // let fileRef = storageRef.child(file.name);
+    await storageRef.put(file);
+    setFileUrl(await storageRef.getDownloadURL());
+  }
 
   return (
     <div>
@@ -38,13 +57,13 @@ function ResultPatient() {
               </div>
             </div>
             <div className="diag-btn">
-              <div class="custom-file w-25">
-                <input type="file" class="custom-file-input" id="customFile" />
+              <div className="custom-file w-25">
+                <input type="file" className="custom-file-input" id="customFile" onChange={handleImportFile}/>
                 <label class="custom-file-label" for="customFile">
                   Choose file
                 </label>
               </div>
-              <button className="btn btn-success ml-3">Upload</button>
+              <button className="btn btn-success ml-3" onClick={handlePostImport}>Upload</button>
             </div>
             <table className="table table-bordered">
               <thead>
@@ -54,11 +73,11 @@ function ResultPatient() {
                   <th scope="col">File</th>
                   <th scope="col">Released date</th>
                 </tr>
-              </thead>
+              </thead>  
               <tbody>
-                {records.map(el => (
+                {records.map((el, i) => (
                   <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{i+1}</th>
                     <td>{el.type_test}</td>
                     <td>{el.file}</td>
                     <td>{el.date}</td>
