@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Navbar } from '../components/'
+import { getPatients } from '../store/index'
 import { useHistory } from 'react-router-dom'
+
 function ListPatient() {
   const history = useHistory()
-
   function navToDetails(params) {
-    history.push('/result-patient')
+    history.push({
+      pathname: '/result-patient', 
+      state: params
+    })
   }
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getPatients())
+  }, [])
+
+  const patientsList = useSelector((state) => state.listPatients)
+
   return (
     <div>
       <Navbar />
@@ -24,17 +38,19 @@ function ListPatient() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td className="d-flex justify-content-center">
-                  <button className="btn btn-success" onClick={navToDetails}>
-                    See Details
-                  </button>
-                </td>
-              </tr>
+              {patientsList.map(el => (
+                <tr key={el.id}>
+                  <th scope="row">{el.id}</th>
+                  <td>{el.name}</td>
+                  <td>{el.name}</td>
+                  <td>{el.email}</td>
+                  <td className="d-flex justify-content-center">
+                    <button className="btn btn-success" onClick={() => navToDetails(el.id)}>
+                      See Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
               <tr>
                 <th scope="row">2</th>
                 <td>Jacob</td>
