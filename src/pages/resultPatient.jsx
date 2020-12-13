@@ -4,7 +4,7 @@ import { Navbar } from '../components/'
 import avatar from '../assets/man.png'
 import { getPatientRecords } from '../store/index'
 import { useHistory } from 'react-router-dom'
-import firebase from '../firebase';
+import { Modal } from '../components/index'
 
 
 function ResultPatient() {
@@ -20,24 +20,6 @@ function ResultPatient() {
 
   const records = useSelector((state) => state.patientRecords)
   const patientProfile = useSelector((state) => state.patientProfile)
-  const [ fileUrl, setFileUrl ] = useState('');
-  const [ files, setFiles ] = useState(null);
-
-  const handleImportFile = (event) => {
-    setFiles(event.target.files[0]);
-    if(files) {
-      console.log(files);
-    }
-  }
-
-  const handlePostImport = async () => {
-    let file = files;
-    let bucketName = 'files'
-    let storageRef = firebase.storage().ref(`${bucketName}/${file.name}`);
-    // let fileRef = storageRef.child(file.name);
-    await storageRef.put(file);
-    setFileUrl(await storageRef.getDownloadURL());
-  }
 
   return (
     <div>
@@ -57,13 +39,14 @@ function ResultPatient() {
               </div>
             </div>
             <div className="diag-btn">
-              <div className="custom-file w-25">
-                <input type="file" className="custom-file-input" id="customFile" onChange={handleImportFile}/>
-                <label class="custom-file-label" for="customFile">
-                  Choose file
-                </label>
-              </div>
-              <button className="btn btn-success ml-3" onClick={handlePostImport}>Upload</button>
+              <button
+                type="button"
+                className="btn btn-success"
+                data-toggle="modal"
+                data-target="#exampleModalCenter"
+              >
+                <i className="fas fa-plus"></i> Record
+              </button>
             </div>
             <table className="table table-bordered">
               <thead>
@@ -87,6 +70,7 @@ function ResultPatient() {
             </table>
           </div>
         </div>
+        <Modal components={params}/>
       </div>
     </div>
   )
