@@ -1,8 +1,19 @@
 import React from 'react'
 import mainLogo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
+import { logOut } from '../store/index'
+import { useDispatch } from 'react-redux'
 
 function Navbar() {
+
+  const dispatch = useDispatch()
+
+  const logout = () => {
+    console.log('hehea')
+    localStorage.removeItem('access_token')
+    dispatch(logOut())
+  }
+
   return (
     <nav className="navbar navbar-expand-lg sticky-top navbar-light bg-light">
       <Link className="navbar-brand" to="/dashboard">
@@ -25,10 +36,11 @@ function Navbar() {
               Dashboard
             </Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item" onClick={() => logout}>
             <Link
               className="nav-link btn btn-danger"
               to="/"
+              onClick={() => logout}
               style={{ color: '#fff' }}>
               Logout
             </Link>
