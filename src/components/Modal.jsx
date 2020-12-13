@@ -1,21 +1,42 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { createRecord } from "../store/index";
+import firebase from '../firebase';
 
-function Modal() {
-  const { id } = useParams();
+function Modal(props) {
   const dispatch = useDispatch();
 
-  const [ input, setInput ] = useState({
-    type_test: '',
-    file: '',
-    date: ''
-  })
+  const id = +props.components
 
-  const handleSubmitDiagnose = (e) => {
+  const [ test, setTest ] = useState('')
+  const [ date, setDate ] = useState('')
+
+  const [ fileUrl, setFileUrl ] = useState('');
+  const [ files, setFiles ] = useState(null);
+
+  const handleImportFile = (event) => {
+    setFiles(event.target.files[0]);
+  }
+
+  const handlePostImport = async () => {
+    let file = files;
+    let bucketName = 'files'
+    let storageRef = firebase.storage().ref(`${bucketName}/${file.name}`);
+    // let fileRef = storageRef.child(file.name);
+    await storageRef.put(file);
+    setFileUrl(await storageRef.getDownloadURL());
+  }
+
+  const handleForm = (e) => {
     e.preventDefault();
     dispatch(
-      addNewMedicalRecord(id, date, diagnose, medicineName, dosis, jumlahObat)
+      createRecord({
+        id: id,
+        type_test: test,
+        date: date,
+        file: fileUrl
+      })
     )
   };
 
@@ -32,7 +53,10 @@ function Modal() {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalCenterTitle">
-              Tambah Diagnosa
+              Tes Medis
+              {test}
+              {date}
+              {fileUrl}
             </h5>
             <button
               type="button"
@@ -44,65 +68,41 @@ function Modal() {
             </button>
           </div>
           <div className="modal-body">
-            <form onSubmit={(e) => handleSubmitDiagnose(e)}>
+            <form onSubmit={handleForm} >
               <div className="form-group">
+                <label>Nama Tes: </label>
+                <input
+                  name="type_test"
+                  type="text"
+                  className="form-control"
+                  id="diagnosa"
+                  onChange={(e) => setTest(e.target.value)}
+                  value={test}
+                ></input>
+                <label>Tanggal Hasil Tes: </label>
                 <div className="col">
                   <input
                     type="date"
                     className="form-control"
-                    value={date}
                     onChange={(e) => setDate(e.target.value)}
+                    value={date}
                   />
                 </div>
-                <label>Diagnosa: </label>
-                <textarea
-                  className="form-control"
-                  id="diagnosa"
-                  rows="3"
-                  value={diagnose}
-                  onChange={(e) => setDiagnose(e.target.value)}
-                ></textarea>
               </div>
-              <div className="form-group">
-                <label>Obat: </label>
-                <div className="row">
-                  <div className="col">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Jenis Obat"
-                      value={medicineName}
-                      onChange={(e) => setMedicineName(e.target.value)}
-                    />
-                  </div>
-                  <div className="col">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Dosis"
-                      value={dosis}
-                      onChange={(e) => setDosis(e.target.value)}
-                    />
-                  </div>
-                  <div className="col">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Jumlah"
-                      value={jumlahObat}
-                      onChange={(e) => setJumlahObat(e.target.value)}
-                    />
-                  </div>
+              <div className="input-group mb-3">
+                <div className="custom-file">
+                  <input type="file" className="custom-file-input" id="inputGroupFile02" onChange={handleImportFile}/>
+                  <label className="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
                 </div>
-                {/* <button className="btn btn-dark btn-block mt-1">
-                  <i className="fas fa-plus"></i> Tambah Obat
-                </button> */}
+                <div className="input-group-append">
+                  <span className="input-group-text" id="inputGroupFileAddon02" onClick={handlePostImport}>Upload</span>
+                </div>
               </div>
               <button
                 type="submit"
                 className="btn btn-success btn-block"
                 data-dismiss="modal"
-                onClick={(e) => handleSubmitDiagnose(e)}
+                onClick={(e) => handleForm(e)}
               >
                 Submit
               </button>

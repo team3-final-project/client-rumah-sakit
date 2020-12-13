@@ -1,16 +1,17 @@
 import React from 'react'
 import mainLogo from '../assets/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { logOut } from '../store/index'
 import { useDispatch } from 'react-redux'
 
 function Navbar() {
 
   const dispatch = useDispatch()
-
+  const history = useHistory()
+  
   const logout = () => {
-    console.log('hehea')
-    localStorage.removeItem('access_token')
+    localStorage.clear()
+    history.push('/')
     dispatch(logOut())
   }
 
@@ -36,14 +37,14 @@ function Navbar() {
               Dashboard
             </Link>
           </li>
-          <li className="nav-item" onClick={() => logout}>
-            <Link
+          <li className="nav-item">
+            <p
               className="nav-link btn btn-danger"
               to="/"
-              onClick={() => logout}
+              onClick={() => logout()}
               style={{ color: '#fff' }}>
               Logout
-            </Link>
+            </p>
           </li>
         </ul>
       </div>

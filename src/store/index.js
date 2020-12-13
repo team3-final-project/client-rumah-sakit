@@ -135,18 +135,22 @@ export function getPatientRecords(params) {
     }
 }
 
-export function createRecord() {
+export function createRecord(input) {
     const access_token = localStorage.getItem('access_token')
-
+    console.log(input)
     return (dispatch) => {
         fetch('http://localhost:3000/hospital-record', {
             method: 'post',
             headers: {
-                access_token: access_token
+                access_token: access_token,
+                'Content-Type': 'application/json'
             },
-            data: {
-
-            }
+            body: JSON.stringify({
+                type_test: input.type_test,
+                date: input.date,
+                file: input.file,
+                PatientId: input.id
+            })
         })
         .then(response => {
             if (response.ok) {

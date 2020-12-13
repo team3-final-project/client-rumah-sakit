@@ -38,9 +38,9 @@ function ListPatient() {
               </tr>
             </thead>
             <tbody>
-              {patientsList.map(el => (
+              {patientsList.map((el, i) => (
                 <tr key={el.id}>
-                  <th scope="row">{el.id}</th>
+                  <th scope="row">{i+1}</th>
                   <td>{el.name}</td>
                   <td>{el.name}</td>
                   <td>{el.email}</td>
