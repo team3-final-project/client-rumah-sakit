@@ -13,13 +13,14 @@ function ResultPatient() {
 
   const history = useHistory()
   const params = history.location.state
+  
+  const records = useSelector((state) => state.patientRecords)
+  const patientProfile = useSelector((state) => state.patientProfile)
 
   useEffect(() => {
     dispatch(getPatientRecords(params))
-  }, [])
+  }, [records])
 
-  const records = useSelector((state) => state.patientRecords)
-  const patientProfile = useSelector((state) => state.patientProfile)
 
   return (
     <div>
@@ -62,7 +63,7 @@ function ResultPatient() {
                   <tr>
                     <th scope="row">{i+1}</th>
                     <td>{el.type_test}</td>
-                    <td>{el.file}</td>
+                    <img src={el.file}/>
                     <td>{el.date}</td>
                   </tr>
                 ))}

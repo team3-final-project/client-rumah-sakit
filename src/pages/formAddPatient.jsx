@@ -37,7 +37,6 @@ function FormPatient() {
   return (
     <div>
       <Navbar />
-      {JSON.stringify(input)}
       <div className="form-add">
         <div className="d-flex justify-content-center flex-nowrap">
           <div className="row">
