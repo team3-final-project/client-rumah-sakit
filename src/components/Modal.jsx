@@ -38,6 +38,10 @@ function Modal(props) {
         file: fileUrl
       })
     )
+    setTest('');
+    setDate('');
+    setFiles('');
+    setFileUrl('');
   };
 
   return (
@@ -54,9 +58,6 @@ function Modal(props) {
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalCenterTitle">
               Tes Medis
-              {test}
-              {date}
-              {fileUrl}
             </h5>
             <button
               type="button"
@@ -68,6 +69,7 @@ function Modal(props) {
             </button>
           </div>
           <div className="modal-body">
+            {fileUrl && <p>Uploaded!</p>}
             <form onSubmit={handleForm} >
               <div className="form-group">
                 <label>Nama Tes: </label>
