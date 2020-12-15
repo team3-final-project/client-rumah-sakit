@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Navbar } from '../components/'
 import AddIcon from '../assets/patient.png'
 import { addPatient } from '../store/index'
+import swal from 'sweetalert'
 
 function FormPatient() {
 
@@ -30,6 +31,13 @@ function FormPatient() {
 
   const handleForm = (e) => {
     e.preventDefault()
+    swal({ 
+      title: 'Success!',
+      text: 'Data has been added',
+      icon: 'success', 
+      button: false,
+      timer: 1000
+    })
     dispatch(addPatient(input))
   }
 
