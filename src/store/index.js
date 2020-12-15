@@ -54,7 +54,18 @@ export function addPatient(input) {
             }
         })
         .then(data => {
-            console.log('2', data)
+            swal({ 
+                title: 'Success!',
+                text: 'Data has been added',
+                icon: 'success', 
+                button: false,
+                timer: 1000
+              })
+            const db = firebase.firestore()
+            
+            await db.collection('refetching-med').doc('zpeLfcCi7dRIpgV8DhMi').update({
+                refetching: true
+            })
             dispatch({ type: 'add_patient', payload: data })
         })
     }

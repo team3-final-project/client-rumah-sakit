@@ -19,7 +19,30 @@ function ResultPatient() {
 
   useEffect(() => {
     dispatch(getPatientRecords(params))
-  }, [records])
+  }, [])
+
+  const db = firebase.firestore()
+
+  db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').onSnapshot(snapshot => {
+    refetchingData()
+  })
+
+  const refetchingData = async () => {
+
+    let data = false
+
+    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').get().then(value => {
+      data = value.data().refetching
+    })
+
+    if(data){
+      dispatch(getMedicalRecordByPatientId(id))
+    }
+
+    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').update({
+      refetching: false
+    })
+  }
 
 
   return (
