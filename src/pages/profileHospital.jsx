@@ -9,7 +9,7 @@ function ProfileHospital() {
 
   useEffect(() => {
     dispatch(getProfile())
-  }, [])
+  }, [dispatch])
 
   const constants = useSelector((state) => state.profile)
 

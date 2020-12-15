@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { createRecord } from "../store/index";
 import firebase from '../firebase';
 

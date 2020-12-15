@@ -22,6 +22,7 @@ export function hospitalLogin(input) {
             })
         })
         .then(response => {
+            console.log(response, '<<< response')
             if (response.ok) {
                 return response.json()
             } else {
@@ -30,6 +31,9 @@ export function hospitalLogin(input) {
         })
         .then(data => {
             dispatch({ type: 'hospital_login', payload: data.access_token })
+        })
+        .catch(err => { 
+            console.log(err)
         })
     }
 }
@@ -112,7 +116,8 @@ export function getPatients() {
 
 export function getPatientRecords(params) {
     const access_token = localStorage.getItem('access_token')
-    
+    console.log(access_token, '<<<access_tokenGetPatientRecords');
+    console.log(params, '<<<paramsGetPatient');
     return (dispatch) => {
         fetch(`http://20.20.22.92:3000/hospital-record/${params}`, {
             method: 'GET',
@@ -129,7 +134,6 @@ export function getPatientRecords(params) {
             }
         })
         .then(data => {
-            console.log(data)
             dispatch({ type: 'fetch_patient_records', payload: data })
         })
     }
@@ -165,12 +169,13 @@ export function createRecord(input) {
     }
 }
 
-export function deleteRecord() {
+export function deleteRecord(id) {
     const access_token = localStorage.getItem('access_token')
 
     return (dispatch) => {
-        fetch('http://20.20.22.92:3000/hospital-record', {
-            method: 'delete',
+        fetch(`http://localhost:3000/hospital-record/${id}`, {
+            method: 'DELETE',
+
             headers: {
                 access_token: access_token
             },
@@ -186,7 +191,10 @@ export function deleteRecord() {
             }
         })
         .then(data => {
-            dispatch({ type: 'delete_record', payload: data.access_token })
+            dispatch({ type: 'delete_record', payload: id })
+        })
+        .catch(err => { 
+            console.log(err);
         })
     }
 }
@@ -209,13 +217,18 @@ const reducer = ( state = initalState, action ) => {
         case 'fetch_patients':
             return { ...state, listPatients: action.payload }
         case 'fetch_patient_records':
-            const patientProfile = action.payload[0].Patient 
-            return { ...state, patientRecords: action.payload, patientProfile: patientProfile }
+            const patientProfile = action.payload[0]
+            console.log(patientProfile, '<<<patientProfile'); 
+            return { ...state, patientRecords: action.payload}
         case 'create_record':
             return state
         case 'delete_record':
-            return state
-        case 'logOut':
+            const afterDeleteHospitalRecord = state.patientRecords.filter(
+                (patientRec) => patientRec.id !== action.payload
+                )
+            console.log(afterDeleteHospitalRecord, '<<<<afterDelete');
+            return {...state, patientRecords: afterDeleteHospitalRecord}
+        case 'logout':
             return { ...state, isLoggedIn: false}
         default:
             return state

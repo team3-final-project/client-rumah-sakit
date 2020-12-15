@@ -17,7 +17,7 @@ function ListPatient() {
 
   useEffect(() => {
     dispatch(getPatients())
-  }, [])
+  }, [dispatch])
 
   const patientsList = useSelector((state) => state.listPatients)
 

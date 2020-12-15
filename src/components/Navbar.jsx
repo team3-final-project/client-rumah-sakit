@@ -40,7 +40,6 @@ function Navbar() {
           <li className="nav-item">
             <p
               className="nav-link btn btn-danger"
-              to="/"
               onClick={() => logout()}
               style={{ color: '#fff' }}>
               Logout
