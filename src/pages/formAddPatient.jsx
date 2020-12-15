@@ -31,13 +31,6 @@ function FormPatient() {
 
   const handleForm = (e) => {
     e.preventDefault()
-    swal({ 
-      title: 'Success!',
-      text: 'Data has been added',
-      icon: 'success', 
-      button: false,
-      timer: 1000
-    })
     dispatch(addPatient(input))
   }
 
