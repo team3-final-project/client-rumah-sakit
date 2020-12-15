@@ -1,17 +1,19 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+import firebase from '../firebase.js'
+import swal from 'sweetalert'
 
 const initalState = {
     isLoggedIn: false,
     profile: [],
     listPatients: [],
     patientRecords: [],
-    patientProfile: []
+    hospitalRec: []
 }
 
 export function hospitalLogin(input) {
     return (dispatch) => {
-        fetch('http://20.20.22.92:3000/hospital/login', {
+        fetch('http://172.20.10.2:3001/hospital/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +31,17 @@ export function hospitalLogin(input) {
             }
         })
         .then(data => {
+            swal({ 
+                title: 'Berhasil!',
+                text: 'Selamat datang kembali!',
+                icon: 'success',
+                buttons: false,
+                timer: 1500
+              })
             dispatch({ type: 'hospital_login', payload: data.access_token })
+        })
+        .catch(err => { 
+            console.log(err)
         })
     }
 }
@@ -38,7 +50,7 @@ export function addPatient(input) {
     const access_token = localStorage.getItem('access_token')
     return (dispatch) => {
         console.log(input)
-        fetch('http://20.20.22.92:3000/hospital/add', {
+        fetch('http://172.20.10.2:3001/hospital/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,15 +68,10 @@ export function addPatient(input) {
         .then(data => {
             swal({ 
                 title: 'Success!',
-                text: 'Data has been added',
+                text: 'Pasien berhasil ditambahkan',
                 icon: 'success', 
                 button: false,
                 timer: 1000
-              })
-            const db = firebase.firestore()
-            
-            await db.collection('refetching-med').doc('zpeLfcCi7dRIpgV8DhMi').update({
-                refetching: true
             })
             dispatch({ type: 'add_patient', payload: data })
         })
@@ -76,7 +83,7 @@ export function getProfile() {
     
     return (dispatch) => {
         console.log('1')
-        fetch('http://20.20.22.92:3000/hospital', {
+        fetch('http://172.20.10.2:3001/hospital', {
             method: 'get',
             headers: {
                 access_token: access_token
@@ -100,7 +107,7 @@ export function getPatients() {
     const access_token = localStorage.getItem('access_token')
     
     return (dispatch) => {
-        fetch( `http://20.20.22.92:3000/hospital/patients`, {
+        fetch( `http://172.20.10.2:3001/hospital/patients`, {
             method: 'GET',
             headers: {
                 access_token: access_token
@@ -122,17 +129,17 @@ export function getPatients() {
 }
 
 export function getPatientRecords(params) {
+
     const access_token = localStorage.getItem('access_token')
     
     return (dispatch) => {
-        fetch(`http://20.20.22.92:3000/hospital-record/${params}`, {
+        fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
             method: 'GET',
             headers: {
                 access_token: access_token
             }
         })
         .then(response => {
-            console.log('beess')
             if (response.ok) {
                 return response.json()
             } else {
@@ -140,7 +147,7 @@ export function getPatientRecords(params) {
             }
         })
         .then(data => {
-            console.log(data)
+            console.log(data, 'ini datas')
             dispatch({ type: 'fetch_patient_records', payload: data })
         })
     }
@@ -148,9 +155,8 @@ export function getPatientRecords(params) {
 
 export function createRecord(input) {
     const access_token = localStorage.getItem('access_token')
-    console.log(input)
     return (dispatch) => {
-        fetch('http://20.20.22.92:3000/hospital-record', {
+        fetch('http://172.20.10.2:3001/hospital-record', {
             method: 'post',
             headers: {
                 access_token: access_token,
@@ -170,23 +176,33 @@ export function createRecord(input) {
                 return Promise.reject('something went wrong!')
             }
         })
-        .then(data => {
+        .then(async data => {
+            const db = firebase.firestore()
+            
+            await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').update({
+                refetching: true
+            })
+            
+            swal({ 
+                title: 'Success!',
+                text: 'Data berhasil ditambahkan',
+                icon: 'success', 
+                button: false,
+                timer: 1000
+            })
             dispatch({ type: 'create_record', payload: data.access_token })
         })
     }
 }
 
-export function deleteRecord() {
+export function deleteRecord(params) {
     const access_token = localStorage.getItem('access_token')
 
     return (dispatch) => {
-        fetch('http://20.20.22.92:3000/hospital-record', {
+        fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
             method: 'delete',
             headers: {
                 access_token: access_token
-            },
-            data: {
-
             }
         })
         .then(response => {
@@ -220,8 +236,7 @@ const reducer = ( state = initalState, action ) => {
         case 'fetch_patients':
             return { ...state, listPatients: action.payload }
         case 'fetch_patient_records':
-            const patientProfile = action.payload[0].Patient 
-            return { ...state, patientRecords: action.payload, patientProfile: patientProfile }
+            return { ...state, patientRecords: action.payload, hospitalRec: action.payload.HospitalRecords }
         case 'create_record':
             return state
         case 'delete_record':

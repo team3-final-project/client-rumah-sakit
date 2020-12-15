@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Navbar } from '../components/'
 import AddIcon from '../assets/patient.png'
 import { addPatient } from '../store/index'
+import swal from 'sweetalert'
 
 function FormPatient() {
 
@@ -17,11 +17,11 @@ function FormPatient() {
 
   const valueChange = (e) => {
 
-    let {name, value} = e.target 
+    let { name, value } = e.target
 
     let newInput = {
       ...input,
-      [name] : value
+      [name]: value
     }
 
     setInput(newInput)
