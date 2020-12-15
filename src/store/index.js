@@ -11,19 +11,17 @@ const initalState = {
 
 export function hospitalLogin(input) {
     return (dispatch) => {
-        console.log('2')
         fetch('http://localhost:3000/hospital/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: 'Hospital 1',
-                password: '1234'
+                name: input.name,
+                password: input.password
             })
         })
         .then(response => {
-            console.log('3')
             if (response.ok) {
                 return response.json()
             } else {
@@ -31,8 +29,33 @@ export function hospitalLogin(input) {
             }
         })
         .then(data => {
-            console.log('4', data)
             dispatch({ type: 'hospital_login', payload: data.access_token })
+        })
+    }
+}
+
+export function addPatient(input) {
+    const access_token = localStorage.getItem('access_token')
+    return (dispatch) => {
+        console.log(input)
+        fetch('http://localhost:3000/hospital/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                access_token: access_token
+            },
+            body: JSON.stringify(input)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                return Promise.reject('something went wrong!')
+            }
+        })
+        .then(data => {
+            console.log('2', data)
+            dispatch({ type: 'add_patient', payload: data })
         })
     }
 }
@@ -57,7 +80,6 @@ export function getProfile() {
             }
         })
         .then(data => {
-            console.log('3', data)
             dispatch({ type: 'fetch_profile', payload: data })
         })
     }
@@ -67,7 +89,6 @@ export function getPatients() {
     const access_token = localStorage.getItem('access_token')
     
     return (dispatch) => {
-        console.log('masuk getpatient')
         fetch( `http://localhost:3000/hospital/patients`, {
             method: 'GET',
             headers: {
@@ -114,18 +135,22 @@ export function getPatientRecords(params) {
     }
 }
 
-export function createRecord() {
+export function createRecord(input) {
     const access_token = localStorage.getItem('access_token')
-
+    console.log(input)
     return (dispatch) => {
         fetch('http://localhost:3000/hospital-record', {
             method: 'post',
             headers: {
-                access_token: access_token
+                access_token: access_token,
+                'Content-Type': 'application/json'
             },
-            data: {
-
-            }
+            body: JSON.stringify({
+                type_test: input.type_test,
+                date: input.date,
+                file: input.file,
+                PatientId: input.id
+            })
         })
         .then(response => {
             if (response.ok) {
@@ -166,11 +191,19 @@ export function deleteRecord() {
     }
 }
 
+export function logOut() {
+    return (dispatch) => {
+        dispatch({ type: 'logout' })
+    }
+}
+
 const reducer = ( state = initalState, action ) => {
     switch (action.type) {
         case 'hospital_login': 
             localStorage.setItem('access_token', action.payload)
             return { ...state, isLoggedIn: true}
+        case 'add_patient':
+            return state
         case 'fetch_profile':
             return { ...state, profile: action.payload }
         case 'fetch_patients':
@@ -182,6 +215,8 @@ const reducer = ( state = initalState, action ) => {
             return state
         case 'delete_record':
             return state
+        case 'logout':
+            return { ...state, isLoggedIn: false}
         default:
             return state
     }

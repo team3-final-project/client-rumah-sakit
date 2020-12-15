@@ -17,7 +17,7 @@ function ListPatient() {
 
   useEffect(() => {
     dispatch(getPatients())
-  }, [])
+  }, [dispatch])
 
   const patientsList = useSelector((state) => state.listPatients)
 
@@ -38,9 +38,9 @@ function ListPatient() {
               </tr>
             </thead>
             <tbody>
-              {patientsList.map(el => (
+              {patientsList.map((el, i) => (
                 <tr key={el.id}>
-                  <th scope="row">{el.id}</th>
+                  <th scope="row">{i+1}</th>
                   <td>{el.name}</td>
                   <td>{el.name}</td>
                   <td>{el.email}</td>
@@ -51,24 +51,6 @@ function ListPatient() {
                   </td>
                 </tr>
               ))}
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td className="d-flex justify-content-center">
-                  <button className="btn btn-success">See Details</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-                <td className="d-flex justify-content-center">
-                  <button className="btn btn-success">See Details</button>
-                </td>
-              </tr>
             </tbody>
           </table>
         </div>

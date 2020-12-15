@@ -9,14 +9,19 @@ function ProfileHospital() {
 
   useEffect(() => {
     dispatch(getProfile())
-  }, [])
+  }, [dispatch])
 
-  const profile = useSelector((state) => state.profile)
+  const constants = useSelector((state) => state.profile)
+
+  const {profile, data} = constants
+
+  if(!profile || !data) {
+    return (<p>Waitinggg</p>)
+  }
 
   return (
     <div>
       <Navbar />
-      {JSON.stringify(profile)}
       <div className="profile-hospital">
         <div className="container">
           <div className="img-frame">
@@ -25,6 +30,7 @@ function ProfileHospital() {
           <div className="card">
             <h1>{profile.name}</h1>
             <p className="display-6">Alamat: {profile.address}</p>
+            <p className="display-6">Jumlah Pasien: {data[0]["Jumlah Patient"]}</p>
           </div>
         </div>
       </div>

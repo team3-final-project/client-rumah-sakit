@@ -4,6 +4,7 @@ import { Navbar } from '../components/'
 import avatar from '../assets/man.png'
 import { getPatientRecords } from '../store/index'
 import { useHistory } from 'react-router-dom'
+import { Modal } from '../components/index'
 
 
 function ResultPatient() {
@@ -12,13 +13,14 @@ function ResultPatient() {
 
   const history = useHistory()
   const params = history.location.state
+  
+  const records = useSelector((state) => state.patientRecords)
+  const patientProfile = useSelector((state) => state.patientProfile)
 
   useEffect(() => {
     dispatch(getPatientRecords(params))
   }, [])
 
-  const records = useSelector((state) => state.patientRecords)
-  const patientProfile = useSelector((state) => state.patientProfile)
 
   return (
     <div>
@@ -38,13 +40,14 @@ function ResultPatient() {
               </div>
             </div>
             <div className="diag-btn">
-              <div class="custom-file w-25">
-                <input type="file" class="custom-file-input" id="customFile" />
-                <label class="custom-file-label" for="customFile">
-                  Choose file
-                </label>
-              </div>
-              <button className="btn btn-success ml-3">Upload</button>
+              <button
+                type="button"
+                className="btn btn-success"
+                data-toggle="modal"
+                data-target="#exampleModalCenter"
+              >
+                <i className="fas fa-plus"></i> Record
+              </button>
             </div>
             <table className="table table-bordered">
               <thead>
@@ -54,13 +57,15 @@ function ResultPatient() {
                   <th scope="col">File</th>
                   <th scope="col">Released date</th>
                 </tr>
-              </thead>
+              </thead>  
               <tbody>
-                {records.map(el => (
-                  <tr>
-                    <th scope="row">1</th>
+                {records.map((el, i) => (
+                  <tr key={i}>
+                    <th scope="row">{i+1}</th>
                     <td>{el.type_test}</td>
-                    <td>{el.file}</td>
+                    <td>
+                      <img alt={"img"} src={el.file}/>
+                    </td>
                     <td>{el.date}</td>
                   </tr>
                 ))}
@@ -68,6 +73,7 @@ function ResultPatient() {
             </table>
           </div>
         </div>
+        <Modal components={params}/>
       </div>
     </div>
   )

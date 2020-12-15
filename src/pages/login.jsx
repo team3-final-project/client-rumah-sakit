@@ -34,7 +34,6 @@ function Login() {
   }, [isLoggedIn])
 
   const handleForm = (e) => {
-    console.log('masuk')
     e.preventDefault()
     dispatch(hospitalLogin(input))
   }
