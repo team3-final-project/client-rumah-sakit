@@ -38,8 +38,6 @@ function Login() {
     dispatch(hospitalLogin(input))
   }
 
-
-
   return (
     <div className="login-page mb-5">
       <div className=" container">
