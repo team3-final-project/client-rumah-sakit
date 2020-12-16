@@ -3,6 +3,7 @@ import mainLogo from '../assets/logo.png'
 import { Link, useHistory } from 'react-router-dom'
 import { logOut } from '../store/index'
 import { useDispatch } from 'react-redux'
+import swal from 'sweetalert'
 
 function Navbar() {
 
@@ -10,9 +11,22 @@ function Navbar() {
   const history = useHistory()
   
   const logout = () => {
-    localStorage.clear()
-    history.push('/')
-    dispatch(logOut())
+    swal({ 
+      title: "Are you sure?",
+      text: "Are you sure that you want to leave this page?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, I am sure!',
+      cancelButtonText: "No, cancel it!",
+      closeOnConfirm: false,
+      closeOnCancel: false,
+      dangerMode: true,
+    }).then(() => { 
+      localStorage.clear()
+      history.push('/')
+      dispatch(logOut())
+    })
   }
 
   return (
