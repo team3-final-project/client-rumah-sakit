@@ -25,7 +25,7 @@ function Dashboard() {
       <Navbar />
       <div className="dashboard">
         <div className="container">
-          <h1 className="mt-3 mb-3">Dashboard</h1>
+          <h1 className="mt-3 mb-3">Beranda</h1>
           <div className="row">
             <div className="col-lg-4 col-xs-12 mb-3" onClick={navToAdd}>
               <div className="card card-dash">
