@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { hospitalLogin } from '../store/index'
 import logo from '../assets/logo.png'
-import swal from 'sweetalert'
 
 function Login() {
 
@@ -36,17 +35,8 @@ function Login() {
 
   const handleForm = (e) => {
     e.preventDefault()
-    swal({ 
-      title: 'Success!',
-      text: 'welcome back',
-      icon: 'success',
-      buttons: false,
-      timer: 1500
-    })
-      dispatch(hospitalLogin(input))
+    dispatch(hospitalLogin(input))
   }
-
-
 
   return (
     <div className="login-page mb-5">

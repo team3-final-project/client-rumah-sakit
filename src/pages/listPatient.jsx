@@ -31,8 +31,7 @@ function ListPatient() {
             <thead className="thead-dark">
               <tr>
                 <th scope="col">No</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
+                <th scope="col">Name</th>
                 <th scope="col">Handle</th>
                 <th scope="col">Options</th>
               </tr>
@@ -41,7 +40,6 @@ function ListPatient() {
               {patientsList.map((el, i) => (
                 <tr key={el.id}>
                   <th scope="row">{i+1}</th>
-                  <td>{el.name}</td>
                   <td>{el.name}</td>
                   <td>{el.email}</td>
                   <td className="d-flex justify-content-center">

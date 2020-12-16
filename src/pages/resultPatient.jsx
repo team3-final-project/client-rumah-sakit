@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import swal from 'sweetalert'
 import { deleteRecord } from '../store/index'
+import firebase from '../firebase'
 
 function ResultPatient() {
 
@@ -16,19 +17,16 @@ function ResultPatient() {
   const history = useHistory()
   const params = history.location.state
 
-  const records = useSelector((state) => state.patientRecords)
-  const patientProfile = useSelector((state) => state.patientProfile)
-  console.log(patientProfile, '<<<<patientProfile');
-  const handleDeletePatientRecord = (id) => {
+  const handleDeletePatientRecord = (params) => {
     swal({
-      title: 'Are you sure?',
-      text: 'It will permanently deleted!',
+      title: 'Apakah anda yakin?',
+      text: 'Data akan terhapus secara permanen',
       icon: 'warning',
       buttons: true,
       dangerMode: true
     }).then(() => {
-      dispatch(deleteRecord(id))
-      swal('Data has been deleted', {
+      dispatch(deleteRecord(params))
+      swal('Data berhasil dihapus', {
         icon: 'success',
         button: false,
         timer: 1000
@@ -38,12 +36,33 @@ function ResultPatient() {
 
   useEffect(() => {
     dispatch(getPatientRecords(params))
-  }, [dispatch, params])
+  }, [])
 
-  if ((!records || !patientProfile)) {
-    return <p>Loading...</p>
+  const data = useSelector((state) => state.patientRecords)
+  const hospitalRec = useSelector((state) => state.hospitalRec)
+
+  const db = firebase.firestore()
+
+  db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').onSnapshot(snapshot => {
+    refetchingData()
+  })
+
+  const refetchingData = async () => {
+    let data = false
+    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').get().then(value => {
+      data = value.data().refetching
+    })
+    if(data){
+      dispatch(getPatientRecords(params))
+    }
+    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').update({
+      refetching: false
+    })
   }
 
+  if(!data) {
+    return <p>Loading...</p>
+  }
 
   return (
     <div>
@@ -57,9 +76,9 @@ function ResultPatient() {
                 <img src={avatar} alt="" className="mx-auto" />
               </div>
               <div className="col-10">
-                <h3>{patientProfile.name}</h3>
-                <p>{Date(patientProfile.birth_date)}</p>
-                <p>{patientProfile.address}</p>
+                <h3>{data.name}</h3>
+                <p>{Date(data.birth_date)}</p>
+                <p>{data.address}</p>
               </div>
             </div>
             <div className="diag-btn">
@@ -83,7 +102,7 @@ function ResultPatient() {
                 </tr>
               </thead>
               <tbody>
-                {records.map((el, i) => (
+                {hospitalRec.map((el, i) => (
                   <tr key={i}>
                     <th scope="row">{i + 1}</th>
                     <td>{el.type_test}</td>

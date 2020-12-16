@@ -16,7 +16,7 @@ function ProfileHospital() {
   const {profile, data} = constants
 
   if(!profile || !data) {
-    return (<p>Waitinggg</p>)
+    return <p>Waitinggg</p>
   }
 
   return (
