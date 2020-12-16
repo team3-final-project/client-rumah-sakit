@@ -96,7 +96,7 @@ function Modal(props) {
                   <label className="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
                 </div>
                 <div className="input-group-append">
-                  <span className="input-group-text" id="inputGroupFileAddon02" onClick={handlePostImport}>Upload</span>
+                  <span className="input-group-text" id="inputGroupFileAddon02" onClick={() => handlePostImport()}>Upload</span>
                 </div>
               </div>
               <button

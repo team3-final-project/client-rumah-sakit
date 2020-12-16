@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux'
 import { Navbar } from '../components/'
 import AddIcon from '../assets/patient.png'
 import { addPatient } from '../store/index'
-import swal from 'sweetalert'
+import { useHistory } from 'react-router-dom'
 
 function FormPatient() {
 
+  const history = useHistory()
   const [input, setInput] = useState({
     nik: '',
     name: '',
@@ -32,6 +33,9 @@ function FormPatient() {
   const handleForm = (e) => {
     e.preventDefault()
     dispatch(addPatient(input))
+    setTimeout(() => {
+      history.push('/dashboard')
+    }, 2150);
   }
 
   return (
@@ -83,7 +87,7 @@ function FormPatient() {
                 </div>
                 <div className="form-group">
                   <input
-                    type="text"
+                    type="date"
                     name="birth_date"
                     className="form-control"
                     placeholder="Tanggal Lahir"

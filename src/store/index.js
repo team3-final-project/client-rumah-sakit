@@ -13,7 +13,7 @@ const initalState = {
 
 export function hospitalLogin(input) {
     return (dispatch) => {
-        fetch('http://172.20.10.2:3001/hospital/login', {
+        fetch('http://localhost:3000/hospital/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ export function hospitalLogin(input) {
                 text: 'Selamat datang kembali!',
                 icon: 'success',
                 buttons: false,
-                timer: 1500
+                timer: 2000
               })
             dispatch({ type: 'hospital_login', payload: data.access_token })
         })
@@ -50,7 +50,7 @@ export function addPatient(input) {
     const access_token = localStorage.getItem('access_token')
     return (dispatch) => {
         console.log(input)
-        fetch('http://172.20.10.2:3001/hospital/add', {
+        fetch('http://localhost:3000/hospital/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export function addPatient(input) {
                 text: 'Pasien berhasil ditambahkan',
                 icon: 'success', 
                 button: false,
-                timer: 1000
+                timer: 2100
             })
             dispatch({ type: 'add_patient', payload: data })
         })
@@ -83,7 +83,7 @@ export function getProfile() {
     
     return (dispatch) => {
         console.log('1')
-        fetch('http://172.20.10.2:3001/hospital', {
+        fetch('http://localhost:3000/hospital', {
             method: 'get',
             headers: {
                 access_token: access_token
@@ -107,7 +107,7 @@ export function getPatients() {
     const access_token = localStorage.getItem('access_token')
     
     return (dispatch) => {
-        fetch( `http://172.20.10.2:3001/hospital/patients`, {
+        fetch( `http://localhost:3000/hospital/patients`, {
             method: 'GET',
             headers: {
                 access_token: access_token
@@ -133,7 +133,7 @@ export function getPatientRecords(params) {
     const access_token = localStorage.getItem('access_token')
     
     return (dispatch) => {
-        fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
+        fetch(`http://localhost:3000/hospital-record/${params}`, {
             method: 'GET',
             headers: {
                 access_token: access_token
@@ -156,7 +156,7 @@ export function getPatientRecords(params) {
 export function createRecord(input) {
     const access_token = localStorage.getItem('access_token')
     return (dispatch) => {
-        fetch('http://172.20.10.2:3001/hospital-record', {
+        fetch('http://localhost:3000/hospital-record', {
             method: 'post',
             headers: {
                 access_token: access_token,
@@ -199,7 +199,7 @@ export function deleteRecord(params) {
     const access_token = localStorage.getItem('access_token')
 
     return (dispatch) => {
-        fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
+        fetch(`http://localhost:3000/hospital-record/${params}`, {
             method: 'delete',
             headers: {
                 access_token: access_token
@@ -241,7 +241,7 @@ const reducer = ( state = initalState, action ) => {
             return state
         case 'delete_record':
             return state
-        case 'logOut':
+        case 'logout':
             return { ...state, isLoggedIn: false}
         default:
             return state
