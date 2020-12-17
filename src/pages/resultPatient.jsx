@@ -12,7 +12,6 @@ import { deleteRecord } from '../store/index'
 import firebase from '../firebase'
 
 function ResultPatient() {
-
   const dispatch = useDispatch()
   const history = useHistory()
   const params = history.location.state
@@ -43,24 +42,33 @@ function ResultPatient() {
 
   const db = firebase.firestore()
 
-  db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').onSnapshot(snapshot => {
-    refetchingData()
-  })
+  db.collection('refetching-hospital')
+    .doc('G5wSLIctbTspSTPqPmAp')
+    .onSnapshot((snapshot) => {
+      refetchingData()
+    })
 
   const refetchingData = async () => {
     let data = false
-    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').get().then(value => {
-      data = value.data().refetching
-    })
-    if(data){
+    await db
+      .collection('refetching-hospital')
+      .doc('G5wSLIctbTspSTPqPmAp')
+      .get()
+      .then((value) => {
+        data = value.data().refetching
+      })
+    if (data) {
       dispatch(getPatientRecords(params))
     }
-    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').update({
-      refetching: false
-    })
+    await db
+      .collection('refetching-hospital')
+      .doc('G5wSLIctbTspSTPqPmAp')
+      .update({
+        refetching: false
+      })
   }
 
-  if(!data) {
+  if (!data) {
     return <p>Loading...</p>
   }
 
@@ -86,8 +94,7 @@ function ResultPatient() {
                 type="button"
                 className="btn btn-success"
                 data-toggle="modal"
-                data-target="#exampleModalCenter"
-              >
+                data-target="#exampleModalCenter">
                 <i className="fas fa-plus"></i> Record
               </button>
             </div>
@@ -107,16 +114,18 @@ function ResultPatient() {
                     <th scope="row">{i + 1}</th>
                     <td>{el.type_test}</td>
                     <td>
-                      <img alt={"img"} src={el.file} />
+                      <div className="img-table">
+                        <img alt={'img'} width="100" src={el.file} />
+                      </div>
                     </td>
                     <td>{el.date}</td>
                     <td className="d-flex justify-content-center">
                       <FontAwesomeIcon
-                        onClick={() =>
-                          handleDeletePatientRecord(el.id)}
+                        onClick={() => handleDeletePatientRecord(el.id)}
                         role="button"
                         icon={faTrash}
-                        color="#C80000" />
+                        color="#C80000"
+                      />
                     </td>
                   </tr>
                 ))}
@@ -128,7 +137,6 @@ function ResultPatient() {
       </div>
     </div>
   )
-
 }
 
 export default ResultPatient
