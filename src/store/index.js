@@ -3,6 +3,8 @@ import thunk from 'redux-thunk'
 import firebase from '../firebase.js'
 import swal from 'sweetalert'
 
+const db = firebase.firestore()
+
 const initalState = {
   isLoggedIn: false,
   profile: [],
@@ -79,6 +81,7 @@ export function addPatient(input) {
 }
 
 export function getProfile() {
+
   const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
@@ -191,6 +194,7 @@ export function createRecord(input) {
           icon: 'success',
           button: false,
           timer: 1000
+
         })
         dispatch({ type: 'create_record', payload: data.access_token })
       })
