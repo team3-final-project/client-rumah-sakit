@@ -42,7 +42,7 @@ function Login() {
         <div className="logo-container">
           <img src={logo} alt="logo" />
         </div>
-        <p className="text-center">Masukkan Akun Rumah Sakit</p>
+        <p className="text-center">Enter Your Hospital Account</p>
         <div className="d-flex justify-content-center">
           <div className="card">
             <div className="card-body">
@@ -53,7 +53,7 @@ function Login() {
                     type="text"
                     className="form-control"
                     aria-describedby="emailHelp"
-                    placeholder="Nama Rumah Sakit"
+                    placeholder="Hospital Name"
                     onChange={valueChange}
                     value={input.name}
                     required
@@ -64,7 +64,7 @@ function Login() {
                     name="password"
                     type="password"
                     className="form-control"
-                    placeholder="Kata Sandi"
+                    placeholder="Password"
                     onChange={valueChange}
                     value={input.password}
                     required
@@ -82,7 +82,7 @@ function Login() {
                   <button
                     type="submit"
                     className="btn btn-success btn-block align-items-center">
-                    Masuk
+                    Log in
                   </button>
                 )}
               </form>

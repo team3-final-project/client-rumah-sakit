@@ -33,7 +33,7 @@ function Navbar() {
         <ul className="navbar-nav ml-auto d-flex align-items-center">
           <li className="nav-item ">
             <Link className="nav-link" to="/dashboard">
-              Beranda
+              Home
             </Link>
           </li>
           <li className="nav-item">
@@ -41,7 +41,7 @@ function Navbar() {
               className="nav-link btn btn-danger"
               onClick={() => logout()}
               style={{ color: '#fff' }}>
-              Keluar
+              Log out
             </button>
           </li>
         </ul>

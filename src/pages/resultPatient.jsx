@@ -18,14 +18,14 @@ function ResultPatient() {
 
   const handleDeletePatientRecord = (params) => {
     swal({
-      title: 'Apakah anda yakin?',
-      text: 'Data akan terhapus secara permanen',
+      title: 'Are you sure?',
+      text: 'Data will be deleted permanently',
       icon: 'warning',
       buttons: true,
       dangerMode: true
     }).then(() => {
       dispatch(deleteRecord(params))
-      swal('Data berhasil dihapus', {
+      swal('Data deleted successfully', {
         icon: 'success',
         button: false,
         timer: 1000
@@ -77,7 +77,7 @@ function ResultPatient() {
       <Navbar />
       <div className="result-patient">
         <div className="container">
-          <h1>Data Pasien</h1>
+          <h1>Patient's Tests</h1>
           <div className="profile">
             <div className="row">
               <div className="col-2">
@@ -85,7 +85,7 @@ function ResultPatient() {
               </div>
               <div className="col-10">
                 <h3>{data.name}</h3>
-                <p>{Date(data.birth_date)}</p>
+                <p>{data.birth_date}</p>
                 <p>{data.address}</p>
               </div>
             </div>
