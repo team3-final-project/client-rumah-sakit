@@ -48,7 +48,7 @@ function FormPatient() {
           </div>
         </div>
         <div>
-          <h3 className="text-center">Tambah Data Pasien</h3>
+          <h3 className="text-center">Insert new patient</h3>
         </div>
         <div className="d-flex justify-content-center">
           <div className="card">
@@ -70,7 +70,7 @@ function FormPatient() {
                     type="text"
                     name="name"
                     className="form-control"
-                    placeholder="Nama Lengkap"
+                    placeholder="Full name"
                     onChange={valueChange}
                     value={input.name}
                   />
@@ -90,7 +90,7 @@ function FormPatient() {
                     type="date"
                     name="birth_date"
                     className="form-control"
-                    placeholder="Tanggal Lahir"
+                    placeholder="Birth date"
                     onChange={valueChange}
                     value={input.birth_date}
                   />
@@ -100,7 +100,7 @@ function FormPatient() {
                     type="text"
                     name="address"
                     className="form-control"
-                    placeholder="Alamat"
+                    placeholder="Address"
                     onChange={valueChange}
                     value={input.address}
                   />

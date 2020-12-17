@@ -26,14 +26,14 @@ function ListPatient() {
       <Navbar />
       <div className="list-patient mt-5">
         <div className="container">
-          <h1>Daftar Pasien</h1>
+          <h1>List of Patients</h1>
           <table className="table table-bordered">
             <thead className="thead-dark">
               <tr>
                 <th scope="col">No</th>
                 <th scope="col">Name</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Options</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>

@@ -57,7 +57,7 @@ function Modal(props) {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalCenterTitle">
-              Tes Medis
+              Medical Test
             </h5>
             <button
               type="button"
@@ -70,14 +70,14 @@ function Modal(props) {
           <div className="modal-body">
             {fileUrl && (
               <div class="alert alert-success" role="alert">
-                File Berhasil di Upload
+                File successfully uploaded
               </div>
             )}
             <form onSubmit={handleForm}>
               <div className="form-group">
-                <label>Nama Tes: </label>
+                <label>Test's Name: </label>
                 <input
-                  placeholder="Masukkan Nama Test"
+                  placeholder="Test Name"
                   name="type_test"
                   type="text"
                   className="form-control"
@@ -86,7 +86,7 @@ function Modal(props) {
                   value={test}
                 />
               </div>
-              <label>Tanggal Hasil Tes: </label>
+              <label>Date: </label>
 
               <div className="form-group">
                 <input

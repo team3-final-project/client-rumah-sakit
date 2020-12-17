@@ -25,13 +25,13 @@ function Dashboard() {
       <Navbar />
       <div className="dashboard">
         <div className="container">
-          <h1 className="mt-3 mb-3">Beranda</h1>
+          <h1 className="mt-3 mb-3">Home</h1>
           <div className="row">
             <div className="col-lg-4 col-xs-12 mb-3" onClick={navToAdd}>
               <div className="card card-dash">
                 <div className="card-body">
                   <div className="card-title">
-                    <h4>Tambah Data Pasien</h4>
+                    <h4>Insert new patient</h4>
                   </div>
                   <div className="icon-opt d-flex justify-content-center">
                     <img
@@ -47,7 +47,7 @@ function Dashboard() {
               <div className="card">
                 <div className="card-body card-dash">
                   <div className="card-title">
-                    <h4>Daftar Pasien</h4>
+                    <h4>List of patients</h4>
                   </div>
                   <div className="icon-opt d-flex justify-content-center">
                     <img
@@ -63,7 +63,7 @@ function Dashboard() {
               <div className="card card-dash">
                 <div className="card-body">
                   <div className="card-title">
-                    <h4>Profil Rumah Sakit</h4>
+                    <h4>Hospital Profile</h4>
                   </div>
                   <div className="icon-opt d-flex justify-content-center">
                     <img

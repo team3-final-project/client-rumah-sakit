@@ -31,9 +31,9 @@ function ProfileHospital() {
             </div>
             <div className="card">
               <h1>{profile.name}</h1>
-              <p className="display-6">Alamat: {profile.address}</p>
+              <p className="display-6">Address: {profile.address}</p>
               <p className="display-6">
-                Jumlah Pasien: {data[0]['Jumlah Patient']}
+                Total of Patient: 10
               </p>
             </div>
           </div>
