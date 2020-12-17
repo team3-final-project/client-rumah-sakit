@@ -178,7 +178,10 @@ export function createRecord(input) {
         }
       })
       .then(async (data) => {
-        const db = firebase.firestore()
+
+        await db.collection('med').doc('h5mjuGm0apJBldX6fMc7').update({
+          notification: true
+        })
 
         await db
           .collection('refetching-hospital')
@@ -217,7 +220,14 @@ export function deleteRecord(params) {
           return Promise.reject('something went wrong!')
         }
       })
-      .then((data) => {
+      .then( async (data) => {
+        await db
+          .collection('refetching-hospital')
+          .doc('G5wSLIctbTspSTPqPmAp')
+          .update({
+            refetching: true
+          })
+
         dispatch({ type: 'delete_record', payload: data.access_token })
       })
   }
