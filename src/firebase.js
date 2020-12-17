@@ -2,12 +2,12 @@ import firebase from 'firebase';
 import 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAmSpsJELuQMMGHQwSiZKlt0rxDDKADqrg",
-  authDomain: "med-notification-1c8a9.firebaseapp.com",
-  projectId: "med-notification-1c8a9",
-  storageBucket: "med-notification-1c8a9.appspot.com",
-  messagingSenderId: "397709004556",
-  appId: "1:397709004556:web:40319a8a6eb95ba1390329"
+  apiKey: "AIzaSyAdOd6XqXSIEK27h-n0izCf_KHIsIol6UM",
+  authDomain: "med-tracker-9f773.firebaseapp.com",
+  projectId: "med-tracker-9f773",
+  storageBucket: "med-tracker-9f773.appspot.com",
+  messagingSenderId: "473078585981",
+  appId: "1:473078585981:web:70de5fa7293bdf3f7a6f14"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
