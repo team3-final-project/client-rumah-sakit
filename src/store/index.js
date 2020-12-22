@@ -3,6 +3,8 @@ import thunk from 'redux-thunk'
 import firebase from '../firebase.js'
 import swal from 'sweetalert'
 
+const db = firebase.firestore()
+
 const initalState = {
     isLoggedIn: false,
     profile: [],
@@ -36,7 +38,7 @@ export function hospitalLogin(input) {
                 text: 'Selamat datang kembali!',
                 icon: 'success',
                 buttons: false,
-                timer: 2000
+                timer: 1000
               })
             dispatch({ type: 'hospital_login', payload: data.access_token })
         })
@@ -147,7 +149,6 @@ export function getPatientRecords(params) {
             }
         })
         .then(data => {
-            console.log(data, 'ini datas')
             dispatch({ type: 'fetch_patient_records', payload: data })
         })
     }
@@ -177,7 +178,6 @@ export function createRecord(input) {
             }
         })
         .then(async data => {
-            const db = firebase.firestore()
             
             await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').update({
                 refetching: true
@@ -212,7 +212,10 @@ export function deleteRecord(params) {
                 return Promise.reject('something went wrong!')
             }
         })
-        .then(data => {
+        .then(async data => {
+            await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').update({
+                refetching: true
+            })
             dispatch({ type: 'delete_record', payload: data.access_token })
         })
     }

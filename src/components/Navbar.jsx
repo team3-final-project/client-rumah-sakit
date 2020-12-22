@@ -9,23 +9,23 @@ function Navbar() {
 
   const dispatch = useDispatch()
   const history = useHistory()
-  
+
   const logout = () => {
-    swal({ 
-      title: "Are you sure?",
-      text: "Are you sure that you want to leave this page?",
+    swal({
+      title: "Apakah anda yakin?",
+      text: "Anda akan keluar dari halaman ini",
       icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Yes, I am sure!',
-      cancelButtonText: "No, cancel it!",
-      closeOnConfirm: false,
-      closeOnCancel: false,
+      button: true,
       dangerMode: true,
-    }).then(() => { 
+    }).then(() => {
       localStorage.clear()
-      history.push('/')
       dispatch(logOut())
+      swal('anda berhasil keluar', {
+        icon: 'success',
+        button: false,
+        timer: 1000
+      })
+      history.push('/')
     })
   }
 

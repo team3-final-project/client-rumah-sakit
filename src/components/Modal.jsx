@@ -18,8 +18,7 @@ function Modal(props) {
     setFiles(event.target.files[0]);
   }
 
-  const handlePostImport = async (e) => {
-    e.preventDefault()
+  const handlePostImport = async () => {
     let file = files;
     let bucketName = 'files'
     let storageRef = firebase.storage().ref(`${bucketName}/${file.name}`);
@@ -97,7 +96,7 @@ function Modal(props) {
                   <label className="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
                 </div>
                 <div className="input-group-append">
-                  <span className="input-group-text" id="inputGroupFileAddon02" onClick={(e) => handlePostImport(e)}>Upload</span>
+                  <span className="input-group-text" id="inputGroupFileAddon02" onClick={() => handlePostImport()}>Upload</span>
                 </div>
               </div>
               <button
