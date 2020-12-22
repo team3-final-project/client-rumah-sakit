@@ -5,30 +5,27 @@ import { hospitalLogin } from '../store/index'
 import logo from '../assets/logo.png'
 
 function Login() {
-
   const dispatch = useDispatch()
   const history = useHistory()
-
+  const [loading, setLoading] = useState(false)
   const [input, setInput] = useState({
     name: '',
     password: ''
   })
 
   const valueChange = (e) => {
-
-    let {name, value} = e.target 
+    let { name, value } = e.target
 
     let newInput = {
       ...input,
-      [name] : value
+      [name]: value
     }
 
     setInput(newInput)
   }
   const isLoggedIn = useSelector((state) => state.isLoggedIn)
-
   useEffect(() => {
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       history.push('/dashboard')
     }
   }, [isLoggedIn])
@@ -36,6 +33,7 @@ function Login() {
   const handleForm = (e) => {
     e.preventDefault()
     dispatch(hospitalLogin(input))
+    setLoading(true)
   }
 
   return (
@@ -44,7 +42,7 @@ function Login() {
         <div className="logo-container">
           <img src={logo} alt="logo" />
         </div>
-        <p className="text-center">Please login first</p>
+        <p className="text-center">Enter Your Hospital Account</p>
         <div className="d-flex justify-content-center">
           <div className="card">
             <div className="card-body">
@@ -55,9 +53,10 @@ function Login() {
                     type="text"
                     className="form-control"
                     aria-describedby="emailHelp"
-                    placeholder="Hospital name"
+                    placeholder="Hospital Name"
                     onChange={valueChange}
                     value={input.name}
+                    required
                   />
                 </div>
                 <div className="form-group">
@@ -68,11 +67,24 @@ function Login() {
                     placeholder="Password"
                     onChange={valueChange}
                     value={input.password}
+                    required
                   />
                 </div>
-                <button type="submit" className="btn btn-success btn-block">
-                  Submit
-                </button>
+                {loading ? (
+                  <button
+                    type="submit"
+                    className="btn btn-success btn-block align-items-center">
+                    <div className="spinner-border text-light" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-success btn-block align-items-center">
+                    Log in
+                  </button>
+                )}
               </form>
             </div>
           </div>

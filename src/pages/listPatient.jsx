@@ -8,7 +8,7 @@ function ListPatient() {
   const history = useHistory()
   function navToDetails(params) {
     history.push({
-      pathname: '/result-patient', 
+      pathname: '/result-patient',
       state: params
     })
   }
@@ -26,24 +26,28 @@ function ListPatient() {
       <Navbar />
       <div className="list-patient mt-5">
         <div className="container">
-          <h1>Daftar Pasien</h1>
+          <h1>List of Patients</h1>
           <table className="table table-bordered">
             <thead className="thead-dark">
               <tr>
                 <th scope="col">No</th>
                 <th scope="col">Name</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Options</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               {patientsList.map((el, i) => (
                 <tr key={el.id}>
-                  <th scope="row">{i+1}</th>
-                  <td>{el.name}</td>
-                  <td>{el.email}</td>
+                  <th scope="row" className="align-middle text-center">
+                    {i + 1}
+                  </th>
+                  <td className="align-middle">{el.name}</td>
+                  <td className="align-middle">{el.email}</td>
                   <td className="d-flex justify-content-center">
-                    <button className="btn btn-success" onClick={() => navToDetails(el.id)}>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => navToDetails(el.id)}>
                       See Details
                     </button>
                   </td>

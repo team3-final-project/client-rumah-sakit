@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux'
 import swal from 'sweetalert'
 
 function Navbar() {
-
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -44,20 +43,20 @@ function Navbar() {
         aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
+      <div className="collapse navbar-collapse " id="navbarNav">
+        <ul className="navbar-nav ml-auto d-flex align-items-center">
+          <li className="nav-item ">
             <Link className="nav-link" to="/dashboard">
-              Dashboard
+              Home
             </Link>
           </li>
           <li className="nav-item">
-            <p
+            <button
               className="nav-link btn btn-danger"
               onClick={() => logout()}
               style={{ color: '#fff' }}>
-              Logout
-            </p>
+              Log out
+            </button>
           </li>
         </ul>
       </div>

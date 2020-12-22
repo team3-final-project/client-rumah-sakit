@@ -12,21 +12,20 @@ import { deleteRecord } from '../store/index'
 import firebase from '../firebase'
 
 function ResultPatient() {
-
   const dispatch = useDispatch()
   const history = useHistory()
   const params = history.location.state
 
   const handleDeletePatientRecord = (params) => {
     swal({
-      title: 'Apakah anda yakin?',
-      text: 'Data akan terhapus secara permanen',
+      title: 'Are you sure?',
+      text: 'Data will be deleted permanently',
       icon: 'warning',
       buttons: true,
       dangerMode: true
     }).then(() => {
       dispatch(deleteRecord(params))
-      swal('Data berhasil dihapus', {
+      swal('Data deleted successfully', {
         icon: 'success',
         button: false,
         timer: 1000
@@ -43,24 +42,34 @@ function ResultPatient() {
 
   const db = firebase.firestore()
 
-  db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').onSnapshot(snapshot => {
-    refetchingData()
-  })
+  db.collection('refetching-hospital')
+    .doc('G5wSLIctbTspSTPqPmAp')
+    .onSnapshot((snapshot) => {
+      refetchingData()
+    })
 
   const refetchingData = async () => {
     let data = false
-    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').get().then(value => {
-      data = value.data().refetching
-    })
-    if(data){
+    await db
+      .collection('refetching-hospital')
+      .doc('G5wSLIctbTspSTPqPmAp')
+      .get()
+      .then((value) => {
+        data = value.data().refetching
+      })
+
+    if (data) {
       dispatch(getPatientRecords(params))
     }
-    await db.collection('refetching-hospital').doc('G5wSLIctbTspSTPqPmAp').update({
-      refetching: false
-    })
+    await db
+      .collection('refetching-hospital')
+      .doc('G5wSLIctbTspSTPqPmAp')
+      .update({
+        refetching: false
+      })
   }
 
-  if(!data) {
+  if (!data) {
     return <p>Loading...</p>
   }
 
@@ -69,7 +78,7 @@ function ResultPatient() {
       <Navbar />
       <div className="result-patient">
         <div className="container">
-          <h1>Data Pasien</h1>
+          <h1>Patient's Tests</h1>
           <div className="profile">
             <div className="row">
               <div className="col-2">
@@ -77,7 +86,7 @@ function ResultPatient() {
               </div>
               <div className="col-10">
                 <h3>{data.name}</h3>
-                <p>{Date(data.birth_date)}</p>
+                <p>{data.birth_date}</p>
                 <p>{data.address}</p>
               </div>
             </div>
@@ -86,8 +95,7 @@ function ResultPatient() {
                 type="button"
                 className="btn btn-success"
                 data-toggle="modal"
-                data-target="#exampleModalCenter"
-              >
+                data-target="#exampleModalCenter">
                 <i className="fas fa-plus"></i> Record
               </button>
             </div>
@@ -107,16 +115,18 @@ function ResultPatient() {
                     <th scope="row">{i + 1}</th>
                     <td>{el.type_test}</td>
                     <td>
-                      <img alt={"img"} src={el.file} />
+                      <div className="img-table">
+                        <p className="btn" onClick={() => window.location = el.file}>Download</p>
+                      </div>
                     </td>
                     <td>{el.date}</td>
                     <td className="d-flex justify-content-center">
                       <FontAwesomeIcon
-                        onClick={() =>
-                          handleDeletePatientRecord(el.id)}
+                        onClick={() => handleDeletePatientRecord(el.id)}
                         role="button"
                         icon={faTrash}
-                        color="#C80000" />
+                        color="#C80000"
+                      />
                     </td>
                   </tr>
                 ))}
@@ -128,7 +138,6 @@ function ResultPatient() {
       </div>
     </div>
   )
-
 }
 
 export default ResultPatient
