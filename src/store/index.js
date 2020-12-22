@@ -15,7 +15,7 @@ const initalState = {
 
 export function hospitalLogin(input) {
   return (dispatch) => {
-    fetch('http://192.168.1.71:3001/hospital/login', {
+    fetch('http://172.20.10.2:3001/hospital/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export function addPatient(input) {
   const access_token = localStorage.getItem('access_token')
   return (dispatch) => {
     console.log(input)
-    fetch('http://192.168.1.71:3001/hospital/add', {
+    fetch('http://172.20.10.2:3001/hospital/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export function getProfile() {
 
   return (dispatch) => {
     console.log('1')
-    fetch('http://192.168.1.71:3001/hospital', {
+    fetch('http://172.20.10.2:3001/hospital', {
       method: 'get',
       headers: {
         access_token: access_token
@@ -110,7 +110,7 @@ export function getPatients() {
   const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
-    fetch(`http://192.168.1.71:3001/hospital/patients`, {
+    fetch(`http://172.20.10.2:3001/hospital/patients`, {
       method: 'GET',
       headers: {
         access_token: access_token
@@ -134,7 +134,7 @@ export function getPatientRecords(params) {
   const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
-    fetch(`http://192.168.1.71:3001/hospital-record/${params}`, {
+    fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
       method: 'GET',
       headers: {
         access_token: access_token
@@ -157,7 +157,7 @@ export function getPatientRecords(params) {
 export function createRecord(input) {
   const access_token = localStorage.getItem('access_token')
   return (dispatch) => {
-    fetch('http://192.168.1.71:3001/hospital-record', {
+    fetch('http://172.20.10.2:3001/hospital-record', {
       method: 'post',
       headers: {
         access_token: access_token,
@@ -178,7 +178,10 @@ export function createRecord(input) {
         }
       })
       .then(async (data) => {
-        const db = firebase.firestore()
+
+        await db.collection('med').doc('h5mjuGm0apJBldX6fMc7').update({
+          notification: true
+        })
 
         await db
           .collection('refetching-hospital')
@@ -204,7 +207,7 @@ export function deleteRecord(params) {
   const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
-    fetch(`http://192.168.1.71:3001/hospital-record/${params}`, {
+    fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
       method: 'delete',
       headers: {
         access_token: access_token
@@ -217,7 +220,14 @@ export function deleteRecord(params) {
           return Promise.reject('something went wrong!')
         }
       })
-      .then((data) => {
+      .then( async (data) => {
+        await db
+          .collection('refetching-hospital')
+          .doc('G5wSLIctbTspSTPqPmAp')
+          .update({
+            refetching: true
+          })
+
         dispatch({ type: 'delete_record', payload: data.access_token })
       })
   }

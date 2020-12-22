@@ -57,6 +57,7 @@ function ResultPatient() {
       .then((value) => {
         data = value.data().refetching
       })
+
     if (data) {
       dispatch(getPatientRecords(params))
     }
@@ -115,7 +116,7 @@ function ResultPatient() {
                     <td>{el.type_test}</td>
                     <td>
                       <div className="img-table">
-                        <img alt={'img'} width="100" src={el.file} />
+                        <p className="btn" onClick={() => window.location = el.file}>Download</p>
                       </div>
                     </td>
                     <td>{el.date}</td>
