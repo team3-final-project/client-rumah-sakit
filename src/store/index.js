@@ -15,7 +15,7 @@ const initalState = {
 
 export function hospitalLogin(input) {
   return (dispatch) => {
-    fetch('http://172.20.10.2:3001/hospital/login', {
+    fetch('https://madtracker.herokuapp.com/hospital/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export function addPatient(input) {
   const access_token = localStorage.getItem('access_token')
   return (dispatch) => {
     console.log(input)
-    fetch('http://172.20.10.2:3001/hospital/add', {
+    fetch('https://madtracker.herokuapp.com/hospital/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export function getProfile() {
 
   return (dispatch) => {
     console.log('1')
-    fetch('http://172.20.10.2:3001/hospital', {
+    fetch('https://madtracker.herokuapp.com/hospital', {
       method: 'get',
       headers: {
         access_token: access_token
@@ -110,7 +110,7 @@ export function getPatients() {
   const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
-    fetch(`http://172.20.10.2:3001/hospital/patients`, {
+    fetch(`https://madtracker.herokuapp.com/hospital/patients`, {
       method: 'GET',
       headers: {
         access_token: access_token
@@ -134,7 +134,7 @@ export function getPatientRecords(params) {
   const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
-    fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
+    fetch(`https://madtracker.herokuapp.com/hospital-record/${params}`, {
       method: 'GET',
       headers: {
         access_token: access_token
@@ -157,7 +157,7 @@ export function getPatientRecords(params) {
 export function createRecord(input) {
   const access_token = localStorage.getItem('access_token')
   return (dispatch) => {
-    fetch('http://172.20.10.2:3001/hospital-record', {
+    fetch('https://madtracker.herokuapp.com/hospital-record', {
       method: 'post',
       headers: {
         access_token: access_token,
@@ -207,7 +207,7 @@ export function deleteRecord(params) {
   const access_token = localStorage.getItem('access_token')
 
   return (dispatch) => {
-    fetch(`http://172.20.10.2:3001/hospital-record/${params}`, {
+    fetch(`https://madtracker.herokuapp.com/hospital-record/${params}`, {
       method: 'delete',
       headers: {
         access_token: access_token
